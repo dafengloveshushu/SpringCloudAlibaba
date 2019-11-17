@@ -1,0 +1,32 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: book-sca-gateway
+  cloud:
+    #  将网关注册到nacos
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # 路由网关配置
+    gateway:
+      # 启用
+      discovery:
+        locator:
+          enabled: true
+      # 配置规则
+      routes:
+      # id 起别名
+      - id: service
+        # 以 lb:// 开头，后面的是注册在 Nacos 上的服务名
+        uri: lb://book-crud-sca-provider
+        predicates:
+        # 匹配 GET 和 POST 请求
+        - Method=GET,POST
+        # 匹配路径 /service 此路径下的请求通过这里
+        - Path=/service/**
+        filters:
+        # 必须加这个，否则会将/service/也会匹配进最终的路径中去 出现404
+        - StripPrefix=1
+      #以上配置并未使用熔断降级，以后提到
