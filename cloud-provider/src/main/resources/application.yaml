@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    url: ${jushu.datasource.dev.url}
-    username: ${jushu.datasource.dev.username}
-    password: ${jushu.datasource.dev.password}
