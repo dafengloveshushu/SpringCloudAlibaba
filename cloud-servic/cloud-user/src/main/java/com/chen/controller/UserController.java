@@ -1,5 +1,7 @@
 package com.chen.controller;
 
+import com.chen.api.R;
+import com.chen.common.RedisUtil;
 import com.chen.pojo.User;
 import com.chen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +19,22 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @RequestMapping("/query")
-    public List<User> queryAll(){
-        return userService.queryAll();
+    public R<List<User>> queryAll(){
+        return R.data(userService.queryAll());
     }
 
     @RequestMapping("/queryUser")
-    public User queryUserNameAndPassword(String userName, String password) {
+    public R<User> queryUserNameAndPassword(String userName, String password) {
         User user = userService.queryUserNameAndPassword(userName, password);
         if(user != null) {
-            return user;
+            redisUtil.set("user:"+user.getId(), user.getUserName());
+            return R.data(user);
         } else {
-            return null;
+            return R.fail("该用户不存在!");
         }
     }
 }

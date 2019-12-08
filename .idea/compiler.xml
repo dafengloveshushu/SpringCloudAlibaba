@@ -8,8 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="cloud-common" />
         <module name="cloud-gateway" />
-        <module name="cloud-service" />
-        <module name="cloudservic" />
         <module name="clouduser" />
         <module name="clouduserapi" />
       </profile>
@@ -17,6 +15,7 @@
     <bytecodeTargetLevel>
       <module name="cloud-service" target="1.8" />
       <module name="cloud-service-api" target="1.8" />
+      <module name="cloud-user" target="1.8" />
       <module name="cloudservic" target="1.8" />
       <module name="cloudserviceapi" target="1.8" />
       <module name="eureka-server" target="1.8" />
